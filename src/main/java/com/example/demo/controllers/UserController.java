@@ -55,11 +55,11 @@ public class UserController {
 		user.setCart(cart);
 
 		if (createUserRequest.getPassword().length() < 7) {
-			log.error("Error when creating user {}, REASON : password must contain more than 7 chars  ",
+			log.error("[CREATE USER] [Fail] for user {}, REASON : Password must be at least 7 characters.",
 					user.getUsername());
 			return ResponseEntity.badRequest().body("Password must be at least 7 characters.");
 		} else if (!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())) {
-			log.error("Error when creating user {}, REASON : password mismatching", user.getUsername());
+			log.error("[CREATE USER] [Fail] for user {}, REASON : password mismatching", user.getUsername());
 			return ResponseEntity.badRequest().body("Password field does not match confirm password field");
 		}
 
@@ -67,7 +67,7 @@ public class UserController {
 
 		userRepository.save(user);
 
-		log.info("User {} created successfully : ", user.getUsername());
+		log.info("[CREATE USER] [Success] for user: {} ", user.getUsername());
 
 		return ResponseEntity.ok(user);
 	}
